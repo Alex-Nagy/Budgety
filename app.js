@@ -1,4 +1,4 @@
-// Budget controller
+// BUDGET CONTROLLER
 var budgetController = (function() {
     
     var Expense = function(id, description, value) {
@@ -25,9 +25,43 @@ var budgetController = (function() {
             inc: 0
         }
     };
+
+    return {
+        addItem: function(type, des, val) {
+             
+            var newItem, ID;
+            
+            // ID = last ID + 1
+
+            //create new ID
+            if (data.allItems[type].length > 0) {
+                ID = data.allItems[type][data.allItems[type].length - 1].id + 1;
+            } else {
+                ID = 0;
+            }
+            
+            // create new item based on 'inc' or 'exp type
+            if (type === 'exp') {
+                newItem = new Expense(ID, des, val);
+            } else if (type === 'inc') {
+                newItem = new Income(ID, des, val);
+            }
+
+            // Push it into our data structure
+            data.allItems[type].push(newItem);
+
+            // return the new element
+            return newItem;
+        },
+
+        testing: function() {
+            console.log(data);
+        }
+    }
+
 })();
 
-// UI controller
+// UI CONTROLLER
 var UIController = (function() {
 
     var DOMstrings = {
@@ -53,7 +87,7 @@ var UIController = (function() {
 
 })(); 
 
-// Globel app controller
+// GLOBAL APP CONTROLLER
 var controller = (function(budgetCtrl, UICtrl) {
 
     var setupEventListeners = function() {
@@ -73,12 +107,13 @@ var controller = (function(budgetCtrl, UICtrl) {
 
 
     var ctrlAddItem = function() {
+        var input, newItem;
         // 1. Get the field input data
-        var input = UICtrl.getInput();
-        console.log(input);
+        input = UICtrl.getInput();
         
         // 2. add the item to the budget controller
-
+        newItem = budgetCtrl.addItem(input.type, input.description, input.value)
+        
         // 3. add the item to the UI
 
         // 4 calculate the budget
