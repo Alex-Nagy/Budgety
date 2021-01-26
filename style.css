@@ -33,6 +33,7 @@ body {
 
 .top {
     height: 40vh;
+    /*try to add a different background image*/
     background-image: linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35)), url(back.png);
     background-size: cover;
     background-position: center;
